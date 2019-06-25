@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microservice.IdentityServer4.DTO\Microservice.IdentityServer4.DTO.csproj" />
+    <ProjectReference Include="..\Microservice.IdentityServer4.Entities\Microservice.IdentityServer4.Entities.csproj" />
+    <ProjectReference Include="..\Microservice.IdentityServer4.IRepository\Microservice.IdentityServer4.IRepository.csproj" />
+    <ProjectReference Include="..\Microservice.IdentityServer4.IServices\Microservice.IdentityServer4.IServices.csproj" />
+  </ItemGroup>
+
+</Project>

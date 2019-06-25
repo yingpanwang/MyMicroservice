@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microservice.IdentityServer4.DataProvider\Microservice.IdentityServer4.DataProvider.csproj" />
+    <ProjectReference Include="..\Microservice.IdentityServer4.IServices\Microservice.IdentityServer4.IServices.csproj" />
+    <ProjectReference Include="..\Microservice.IdentityServer4.Repository\Microservice.IdentityServer4.Repository.csproj" />
+    <ProjectReference Include="..\Microservice.IdentityServer4.Services\Microservice.IdentityServer4.Services.csproj" />
+  </ItemGroup>
+
+</Project>
