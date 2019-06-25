@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.IdentityServer4.Server", "Microservice.IdentityServer4.Server\Microservice.IdentityServer4.Server.csproj", "{CA9F90DA-E564-4AFF-8877-8582FE7BAB87}"
 EndProject
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.IdentityServer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservice", "Microservice", "{1E15BCDD-FEB6-4A36-9F10-2F167C63C66E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.IdentityServer4.Repository", "Microservice.IdentityServer4.Repository\Microservice.IdentityServer4.Repository.csproj", "{38EF0C48-14AD-4526-A36F-D7A99C493D0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.IdentityServer4.Repositories", "Microservice.IdentityServer4.Repositories\Microservice.IdentityServer4.Repositories.csproj", "{38EF0C48-14AD-4526-A36F-D7A99C493D0D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer.Services", "IdentityServer.Services", "{46C0AF28-5C60-4A90-8470-EED054FF3C54}"
 EndProject
@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.Common.IoC", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.IdentityServer4.Entities", "Microservice.IdentityServer4.Entities\Microservice.IdentityServer4.Entities.csproj", "{A20C5A50-5A22-4C7C-9A40-44F599E750DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.IdentityServer4.IRepository", "Microservice.IdentityServer4.IRepository\Microservice.IdentityServer4.IRepository.csproj", "{80D1016D-EB46-4494-ADAC-EEACC8A0811E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.IdentityServer4.IRepositories", "Microservice.IdentityServer4.IRepositories\Microservice.IdentityServer4.IRepositories.csproj", "{80D1016D-EB46-4494-ADAC-EEACC8A0811E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

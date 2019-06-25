@@ -1,5 +1,5 @@
 ﻿using Microservice.IdentityServer4.DTO;
-using Microservice.IdentityServer4.IRepository;
+using Microservice.IdentityServer4.IRepositories;
 using Microservice.IdentityServer4.IServices;
 using System;
 using System.Collections.Generic;

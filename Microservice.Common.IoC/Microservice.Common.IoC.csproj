@@ -11,8 +11,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Microservice.IdentityServer4.DataProvider\Microservice.IdentityServer4.DataProvider.csproj" />
+    <ProjectReference Include="..\Microservice.IdentityServer4.IRepositories\Microservice.IdentityServer4.IRepositories.csproj" />
     <ProjectReference Include="..\Microservice.IdentityServer4.IServices\Microservice.IdentityServer4.IServices.csproj" />
-    <ProjectReference Include="..\Microservice.IdentityServer4.Repository\Microservice.IdentityServer4.Repository.csproj" />
+    <ProjectReference Include="..\Microservice.IdentityServer4.Repositories\Microservice.IdentityServer4.Repositories.csproj" />
     <ProjectReference Include="..\Microservice.IdentityServer4.Services\Microservice.IdentityServer4.Services.csproj" />
   </ItemGroup>
 

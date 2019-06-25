@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microservice.IdentityServer4.IRepository
+namespace Microservice.IdentityServer4.IRepositories
 {
     public interface IUserRepository : IBaseRepository<User>
     {

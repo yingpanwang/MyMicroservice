@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microservice.IdentityServer4.IRepository
+namespace Microservice.IdentityServer4.IRepositories
 {
     /// <summary>
     /// 基础仓储接口

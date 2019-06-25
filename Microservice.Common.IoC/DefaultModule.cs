@@ -37,7 +37,7 @@ namespace Microservice.Common.Ioc
             //builder.RegisterType<ISTDbContext>().AsSelf().InstancePerLifetimeScope();
 
             //注册Repository中的对象,Repository中的类要以Repository结尾，否则注册失败
-            builder.RegisterAssemblyTypes(GetAssemblyByName("Microservice.IdentityServer4.Repository")).Where(a => a.Name.EndsWith("Repository")).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(GetAssemblyByName("Microservice.IdentityServer4.Repositories")).Where(a => a.Name.EndsWith("Repository")).AsImplementedInterfaces();
             //注册Service中的对象,Service中的类要以Service结尾，否则注册失败
             builder.RegisterAssemblyTypes(GetAssemblyByName("Microservice.IdentityServer4.Services")).Where(a => a.Name.EndsWith("Service")).AsImplementedInterfaces();
         }

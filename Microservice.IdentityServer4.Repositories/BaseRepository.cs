@@ -1,11 +1,11 @@
 ﻿using Microservice.IdentityServer4.DataProvider;
-using Microservice.IdentityServer4.IRepository;
+using Microservice.IdentityServer4.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Microservice.IdentityServer4.Repository
+namespace Microservice.IdentityServer4.Repositories
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, new()
     {
