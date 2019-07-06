@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Microservice.Common.Core\Microservice.Common.Core.csproj" />
     <ProjectReference Include="..\Microservice.IdentityServer4.DTO\Microservice.IdentityServer4.DTO.csproj" />
     <ProjectReference Include="..\Microservice.IdentityServer4.Entities\Microservice.IdentityServer4.Entities.csproj" />
     <ProjectReference Include="..\Microservice.IdentityServer4.IRepositories\Microservice.IdentityServer4.IRepositories.csproj" />

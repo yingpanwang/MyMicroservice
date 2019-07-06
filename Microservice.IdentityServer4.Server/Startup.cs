@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microservice.Common.Ioc;
+using Microservice.Common.ApiMiddlewares;
 using Microservice.IdentityServer4.DataProvider;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace Microservice.IdentityServer4.Server
 {
@@ -33,7 +37,7 @@ namespace Microservice.IdentityServer4.Server
             //services.AddTransient<IBaseRepository<User>, BaseRepository<User>>();
             //services.AddTransient<IUserRepository, UserRepository>();
             //services.AddTransient<IUserService, UserService>();
-
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddIdentityServer()
               .AddDeveloperSigningCredential()
@@ -42,7 +46,7 @@ namespace Microservice.IdentityServer4.Server
               .AddInMemoryClients(IdentityServerConfig.GetClients())
               .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
               .AddProfileService<ProfileService>();
-
+            
             services.AddCors(opt =>
             {
                 opt.AddPolicy("AllowAllOrigin", builder =>
@@ -54,13 +58,15 @@ namespace Microservice.IdentityServer4.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            loggerFactory.AddNLog();
             app.UseCors("AllowAllOrigin");
+            app.UseResponseCollection();
             app.UseIdentityServer();
             app.UseMvc();
         }
@@ -75,6 +81,7 @@ namespace Microservice.IdentityServer4.Server
             //新模块组件注册    
             DefaultModule.Configuration = Configuration;
             builder.RegisterModule<DefaultModule>();
+            
             //创建容器
             var Container = builder.Build();
             //第三方IOC接管 core内置DI容器 

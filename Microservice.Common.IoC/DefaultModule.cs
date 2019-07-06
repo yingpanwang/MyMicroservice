@@ -32,7 +32,7 @@ namespace Microservice.Common.Ioc
             //        opt.MigrationsAssembly("Microservice.IdentityServer4.DataProvider");
             //    });
             //    return optionsBuilder.Options;
-            //}).InstancePerLifetimeScope();
+            //}).SingleInstance();
 
             //builder.RegisterType<ISTDbContext>().AsSelf().InstancePerLifetimeScope();
 

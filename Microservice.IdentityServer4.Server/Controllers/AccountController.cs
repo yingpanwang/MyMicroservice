@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microservice.IdentityServer4.IServices;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace Microservice.IdentityServer4.Server.Controllers
 {
@@ -18,7 +20,13 @@ namespace Microservice.IdentityServer4.Server.Controllers
         public string Get()
         {
             var users = userService.QueryAllUser();
+            bool addUser = userService.AddUser(new DTO.UserDTO() { ID = Guid.NewGuid().ToString(), Name = "测试用户名称", Password = "测试密码" });
+            if (addUser)
+            {
+                return "添加成功";
+            }
             return "this is account get method!";
         }
+
     }
 }

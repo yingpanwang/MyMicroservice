@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Microservice.IdentityServer4.IRepositories
@@ -14,14 +15,14 @@ namespace Microservice.IdentityServer4.IRepositories
         /// 添加
         /// </summary>
         /// <param name="entity">要添加的实体</param>
-        /// <returns></returns>
+        /// <returns>是否添加成功</returns>
         bool Add(TEntity entity);
 
         /// <summary>
         /// 批量添加
         /// </summary>
         /// <param name="entities">要添加的实体集合</param>
-        /// <returns></returns>
+        /// <returns>是否批量添加成功</returns>
         bool AddRange(params TEntity[] entities);
 
         /// <summary>
@@ -29,5 +30,12 @@ namespace Microservice.IdentityServer4.IRepositories
         /// </summary>
         /// <returns></returns>
         IEnumerable<TEntity> QueryAll();
+        /// <summary>
+        /// 查询所有信息
+        /// </summary>
+        /// <param name="order">排序表达式</param>
+        /// <returns>符合条件的实体集合</returns>
+        IEnumerable<TEntity> QueryAll<TOrder>(Expression<Func<TEntity, TOrder>> order);
+
     }
 }

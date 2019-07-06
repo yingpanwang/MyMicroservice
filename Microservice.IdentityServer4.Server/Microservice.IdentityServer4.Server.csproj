@@ -13,11 +13,20 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.5.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Microservice.Common.ApiMiddlewares\Microservice.Common.ApiMiddlewares.csproj" />
+    <ProjectReference Include="..\Microservice.Common.Core\Microservice.Common.Core.csproj" />
     <ProjectReference Include="..\Microservice.Common.Ioc\Microservice.Common.IoC.csproj" />
     <ProjectReference Include="..\Microservice.IdentityServer4.DataProvider\Microservice.IdentityServer4.DataProvider.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
