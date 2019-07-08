@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.IdentityServer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.Common.ApiMiddlewares", "Microservice.Common.ApiMiddlewares\Microservice.Common.ApiMiddlewares.csproj", "{512778D8-297A-4573-A905-E7D565BEAEEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservice.Common.Core", "Microservice.Common.Core\Microservice.Common.Core.csproj", "{3F2BAC82-F4D9-4AAD-B3F7-86655296E43A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservice.Common.Core", "Microservice.Common.Core\Microservice.Common.Core.csproj", "{3F2BAC82-F4D9-4AAD-B3F7-86655296E43A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMicroservice.Ocelot", "MyMicroservice.Ocelot\MyMicroservice.Ocelot.csproj", "{8F10A46E-E64B-40A1-B1AF-97671F6863B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{3F2BAC82-F4D9-4AAD-B3F7-86655296E43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F2BAC82-F4D9-4AAD-B3F7-86655296E43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F2BAC82-F4D9-4AAD-B3F7-86655296E43A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F10A46E-E64B-40A1-B1AF-97671F6863B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F10A46E-E64B-40A1-B1AF-97671F6863B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F10A46E-E64B-40A1-B1AF-97671F6863B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F10A46E-E64B-40A1-B1AF-97671F6863B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

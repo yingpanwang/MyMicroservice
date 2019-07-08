@@ -1,5 +1,6 @@
 ﻿using Microservice.IdentityServer4.DataProvider;
 using Microservice.IdentityServer4.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,22 +15,22 @@ namespace Microservice.IdentityServer4.Repositories
         /// <summary>
         /// 日志
         /// </summary>
-        protected readonly ILogger logger;
+        protected readonly ILogger _logger;
 
         /// <summary>
         /// 数据上下文
         /// </summary>
-        protected ISTDbContext Db { get; set; }
+        private readonly ISTDbContext _db;
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="dbContext">数据上下文</param>
         /// <param name="logger">日志</param>
-        protected BaseRepository(ISTDbContext dbContext,ILogger<TEntity> logger)
+        protected BaseRepository(ISTDbContext dbContext, ILogger<TEntity> logger)
         {
-            this.logger = logger;
-            Db = dbContext;
+            _logger = logger;
+            _db = dbContext;
         }
 
         /// <summary>
@@ -41,13 +42,13 @@ namespace Microservice.IdentityServer4.Repositories
         {
             try
             {
-                logger.LogInformation($" {this.GetType().Name} 添加信息");
-                Db.Set<TEntity>().Add(entity);
-                return Db.SaveChanges() > 0;
+                _logger.LogInformation($" {this.GetType().Name} 添加信息");
+                _db.Set<TEntity>().Add(entity);
+                return _db.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
-                logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.Message);
                 return false;
             }
         }
@@ -61,14 +62,39 @@ namespace Microservice.IdentityServer4.Repositories
         {
             try
             {
-                logger.LogInformation($"{this.GetType().Name} 批量添加信息: ");
-                Db.Set<TEntity>().AddRange(entities);
-                return Db.SaveChanges() > 0;
+                _logger.LogInformation($"{this.GetType().Name} 批量添加信息: ");
+                _db.Set<TEntity>().AddRange(entities);
+                return _db.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
-                logger.LogError(ex,$"{this.GetType().Name} 错误信息: {ex.Message}");
+                _logger.LogError(ex, $"{this.GetType().Name} 错误信息: {ex.Message}");
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// 删除信息
+        /// </summary>
+        /// <param name="entity">要删除的实体</param>
+        /// <param name="isLogicDelete">是否为逻辑删除(默认值:true)</param>
+        /// <returns></returns>
+        public bool Delete(TEntity entity, bool isLogicDelete = true)
+        {
+            if (isLogicDelete)
+            {
+                var property = entity.GetType().GetProperty("IsDelete");
+                if (property == null)
+                {
+                    throw new InvalidOperationException("无法逻辑删除该实体，请检查该实体是否具有逻辑删除属性");
+                }
+                return false;
+            }
+            else
+            {
+                _logger.LogInformation($"{this.GetType().Name} 删除信息");
+                _db.Set<TEntity>().Remove(entity);
+                return _db.SaveChanges() > 0;
             }
         }
 
@@ -80,38 +106,86 @@ namespace Microservice.IdentityServer4.Repositories
         {
             try
             {
-                    return Db.Set<TEntity>().ToList();
+                return _db.Set<TEntity>().AsNoTracking();
             }
             catch (Exception ex)
             {
-                logger.LogError(ex.Message, ex);
-                return null;
+                _logger.LogError(ex, ex.Message);
+                return new List<TEntity>();
             }
         }
 
         /// <summary>
         /// 查询所有信息
         /// </summary>
-        /// <param name="order">排序表达式</param>
+        /// <param name="sortExpression">排序表达式</param>
         /// <returns>符合条件的实体集合</returns>
-        public IEnumerable<TEntity> QueryAll<TOrder>(Expression<Func<TEntity, TOrder>> order)
+        public IEnumerable<TEntity> QueryAll<TSort>(bool isAsc = true, Expression<Func<TEntity, TSort>> sortExpression = null)
         {
             try
             {
-                if (order != null)
+                if (sortExpression != null)
                 {
-                    return Db.Set<TEntity>().OrderByDescending(order).ToList();
+                    return _db.Set<TEntity>().OrderByDescending(sortExpression).AsNoTracking().ToList();
                 }
                 else
                 {
-                    return Db.Set<TEntity>().ToList();
+                    return _db.Set<TEntity>().AsNoTracking().ToList();
                 }
             }
             catch (Exception ex)
             {
-                logger.LogError(ex.Message, ex);
-                return null;
+                _logger.LogError(ex, ex.Message);
+                return new List<TEntity>();
             }
         }
+        /// <summary>
+        /// 条件查询
+        /// </summary>
+        /// <typeparam name="TSort">排序</typeparam>
+        /// <param name="queryExpression">条件查询表达式</param>
+        /// <param name="sortExpression">排序表达式</param>
+        /// <returns></returns>
+        public IEnumerable<TEntity> Query<TSort>(Expression<Func<TEntity, bool>> queryExpression, bool isAsc = true, Expression<Func<TEntity, TSort>> sortExpression = null)
+        {
+            var queryResult = _db.Set<TEntity>().Where(queryExpression);
+            if (isAsc)
+            {
+                queryResult = queryResult.OrderBy(sortExpression);
+            }
+            else
+            {
+                queryResult = queryResult.OrderByDescending(sortExpression);
+            }
+
+            return queryResult.AsNoTracking();
+        }
+
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <typeparam name="TSort">排序</typeparam>
+        /// <param name="pageIndex">页码（默认值：1）</param>
+        /// <param name="pageSize">数据量(默认值:20)</param>
+        /// <param name="queryExpression">条件查询表达式</param>
+        /// <param name="sortExpression">排序表达式</param>
+        /// <returns></returns>
+        public IEnumerable<TEntity> QueryPage<TSort>(int pageIndex = 1, int pageSize = 20, Expression<Func<TEntity, bool>> queryExpression = null, bool isAsc = true, Expression<Func<TEntity, TSort>> sortExpression = null)
+        {
+            var queryResult = _db.Set<TEntity>().Where(queryExpression);
+            if (isAsc)
+            {
+                queryResult = queryResult.OrderBy(sortExpression);
+            }
+            else
+            {
+                queryResult = queryResult.OrderByDescending(sortExpression);
+            }
+
+            var pageResult = queryResult.Skip((pageIndex - 1 )* pageSize).Take(pageSize);
+
+            return pageResult;
+        }
+
     }
 }

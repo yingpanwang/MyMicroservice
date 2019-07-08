@@ -9,6 +9,8 @@ namespace Microservice.IdentityServer4.IServices
     {
         bool AddUser(UserDTO user);
 
+        bool DeleteUser(UserDTO user);
+
         IEnumerable<UserDTO> QueryAllUser();
     }
 }

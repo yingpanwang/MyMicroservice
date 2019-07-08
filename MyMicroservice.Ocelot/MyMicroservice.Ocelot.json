@@ -1,0 +1,45 @@
+{
+  //"包含服务器的路由配置": null,
+  "ReRoutes": [
+    {
+      // 下游请求模板
+      "DownstreamPathTemplate": "/api/{controller}/{action}",
+      "DownstreamScheme": "http",
+      // "下游服务的地址"
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/ocelot/{controller}/{action}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ],
+      "Priority": "0"
+    },
+    {
+      // 下游请求模板
+      "DownstreamPathTemplate": "/api/{controller}",
+      "DownstreamScheme": "http",
+      // "下游服务的地址"
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/ocelot/{controller}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ],
+      "Priority": "1"
+    }
+  ],
+
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8686"
+  }
+}

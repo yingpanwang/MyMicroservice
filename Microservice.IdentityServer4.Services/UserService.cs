@@ -26,6 +26,17 @@ namespace Microservice.IdentityServer4.Services
             return Repository.Add(entity);
         }
 
+        public bool DeleteUser(UserDTO user)
+        {
+            var entity = new User()
+            {
+                ID = user.ID,
+                Name = user.Name,
+                Password = user.Password
+            };
+            return Repository.Delete(entity);
+        }
+
         public IEnumerable<UserDTO> QueryAllUser()
         {
             var result = Repository.QueryAll().Select(x => new UserDTO()
@@ -34,7 +45,6 @@ namespace Microservice.IdentityServer4.Services
                 Name = x.Name,
                 Password = x.Password
             });
-
             return result;
         }
     }

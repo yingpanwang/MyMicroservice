@@ -26,16 +26,45 @@ namespace Microservice.IdentityServer4.IRepositories
         bool AddRange(params TEntity[] entities);
 
         /// <summary>
-        /// 查询所有
+        /// 删除信息
         /// </summary>
+        /// <param name="entity">要删除的实体</param>
+        /// <param name="isLogicDelete">是否为逻辑删除(默认值:true)</param>
         /// <returns></returns>
-        IEnumerable<TEntity> QueryAll();
+        bool Delete(TEntity entity, bool isLogicDelete = true);
+
         /// <summary>
         /// 查询所有信息
         /// </summary>
-        /// <param name="order">排序表达式</param>
-        /// <returns>符合条件的实体集合</returns>
-        IEnumerable<TEntity> QueryAll<TOrder>(Expression<Func<TEntity, TOrder>> order);
+        /// <returns></returns>
+        IEnumerable<TEntity> QueryAll();
 
+        /// <summary>
+        /// 查询所有信息
+        /// </summary>
+        /// <param name="sortExpression">排序表达式</param>
+        /// <returns>符合条件的实体集合</returns>
+        IEnumerable<TEntity> QueryAll<TSort>(bool isAsc = true, Expression<Func<TEntity, TSort>> sortExpression = null);
+
+        /// <summary>
+        /// 条件查询
+        /// </summary>
+        /// <typeparam name="TSort">排序</typeparam>
+        /// <param name="queryExpression">条件查询表达式</param>
+        /// <param name="sortExpression">排序表达式</param>
+        /// <returns></returns>
+        IEnumerable<TEntity> Query<TSort>(Expression<Func<TEntity,bool>> queryExpression, bool isAsc = true, Expression<Func<TEntity, TSort>> sortExpression = null);
+
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <typeparam name="TSort">排序</typeparam>
+        /// <param name="pageIndex">页码（默认值：1）</param>
+        /// <param name="pageSize">数据量(默认值:20)</param>
+        /// <param name="queryExpression">条件查询表达式</param>
+        /// <param name="sortExpression">排序表达式</param>
+        /// <returns></returns>
+        IEnumerable<TEntity> QueryPage<TSort>(int pageIndex = 1, int pageSize = 20, 
+            Expression<Func<TEntity, bool>> queryExpression = null, bool isAsc = true, Expression<Func<TEntity, TSort>> sortExpression = null);
     }
 }
