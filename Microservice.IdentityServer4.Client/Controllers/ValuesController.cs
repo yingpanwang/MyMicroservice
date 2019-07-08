@@ -15,12 +15,10 @@ namespace Microservice.IdentityServer4.Client.Controllers
     {
         // GET api/values
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            var c = MyAuthInfo;
-            var api = HttpApi.Resolve<IUserApi>();
-            string result = await api.Get();
+            var httpContext = HttpContext;
             return new string[] { "value1", "value2" };
         }
 

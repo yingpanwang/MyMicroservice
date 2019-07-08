@@ -1,6 +1,7 @@
 ﻿using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
+using Microservice.IdentityServer4.IServices;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,23 @@ namespace Microservice.IdentityServer4.Server
 {
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
+        private readonly IUserService _userService;
+        public ResourceOwnerPasswordValidator(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
+            var user = await _userService.CheckAsync(context.UserName, context.Password);
             //根据context.UserName和context.Password与数据库的数据做校验，判断是否合法
             if (context.UserName == "admin" && context.Password == "123")
+            {
+                context.Result = new GrantValidationResult(
+                subject: context.UserName,
+                authenticationMethod: "custom",
+                claims: GetUserClaims());
+            } else if (user != null)
             {
                 context.Result = new GrantValidationResult(
                 subject: context.UserName,

@@ -9,7 +9,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5001
+          "Port": 50433
         }
       ],
       "UpstreamPathTemplate": "/ocelot/{controller}/{action}",
@@ -17,7 +17,11 @@
         "Get",
         "Post"
       ],
-      "Priority": "0"
+      "Priority": "0",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "api1",
+        "AllowedScopes": []
+      }
     },
     {
       // 下游请求模板
@@ -27,7 +31,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5001
+          "Port": 50433
         }
       ],
       "UpstreamPathTemplate": "/ocelot/{controller}",
@@ -35,7 +39,11 @@
         "Get",
         "Post"
       ],
-      "Priority": "1"
+      "Priority": "1",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "api1",
+        "AllowedScopes": []
+      }
     }
   ],
 

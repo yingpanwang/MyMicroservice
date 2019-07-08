@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Microservice.IdentityServer4.Services
 {
@@ -24,5 +25,6 @@ namespace Microservice.IdentityServer4.Services
         /// 仓储
         /// </summary>
         protected TRepository Repository { get; set; }
+
     }
 }

@@ -23,6 +23,12 @@ namespace Microservice.IdentityServer4.Repositories
         private readonly ISTDbContext _db;
 
         /// <summary>
+        /// 实体表
+        /// </summary>
+        protected readonly DbSet<TEntity> _dbSet; 
+             
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="dbContext">数据上下文</param>
@@ -31,6 +37,7 @@ namespace Microservice.IdentityServer4.Repositories
         {
             _logger = logger;
             _db = dbContext;
+            _dbSet = _db.Set<TEntity>();
         }
 
         /// <summary>

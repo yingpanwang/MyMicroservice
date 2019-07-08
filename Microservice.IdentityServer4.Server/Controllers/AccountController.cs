@@ -3,6 +3,7 @@ using Microservice.IdentityServer4.IServices;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Microservice.IdentityServer4.Server.Controllers
 {

@@ -27,15 +27,15 @@ namespace Microservice.IdentityServer4.Client
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services
-                .AddAuthorization()
-                .AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = "http://localhost:5001";
-                    options.RequireHttpsMetadata = false;
-                    options.ApiName = "api1";
-                });
+            //services
+            //    .AddAuthorization()
+            //    .AddAuthentication("Bearer")
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = "http://localhost:5001";
+            //        options.RequireHttpsMetadata = false;
+            //        options.ApiName = "api1";
+            //    });
 
             HttpApi.Register<IUserApi>().ConfigureHttpApiConfig(c =>
             {
@@ -52,7 +52,7 @@ namespace Microservice.IdentityServer4.Client
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseMvc();
         }
     }

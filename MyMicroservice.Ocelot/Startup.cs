@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MyMicroservice.Ocelot.Config;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -26,6 +28,22 @@ namespace MyMicroservice.Ocelot
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var identityBuilder = services.AddAuthentication();
+            IdentityServerConfig identityServerConfig = new IdentityServerConfig();
+            Configuration.Bind("IdentityServerConfig", identityServerConfig);
+            if (identityServerConfig != null)
+            {
+                foreach (var resource in identityServerConfig.Resources)
+                {
+                    identityBuilder.AddIdentityServerAuthentication(resource.Key,options=> 
+                    {
+                        options.Authority = $"{identityServerConfig.AuthorityIP}:{identityServerConfig.Port}";
+                        options.RequireHttpsMetadata = false;
+                        options.ApiName = resource.Key;
+                        options.SupportedTokens = SupportedTokens.Both;
+                    });
+                }
+            }
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddOcelot();
         }
@@ -40,7 +58,7 @@ namespace MyMicroservice.Ocelot
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
