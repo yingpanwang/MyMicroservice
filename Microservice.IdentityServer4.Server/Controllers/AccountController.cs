@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microservice.IdentityServer4.IServices;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using Microservice.IdentityServer4.IServices;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Microservice.IdentityServer4.Server.Controllers
 {
@@ -28,10 +25,23 @@ namespace Microservice.IdentityServer4.Server.Controllers
         [HttpGet("{id}")]
         public IActionResult GetByID(string id)
         {
-            var users = userService.QueryAllUser().Where(x=>x.ID == id);
+            var users = userService.QueryAllUser().Where(x => x.ID == id);
             userService.DeleteUser(new DTO.UserDTO() { ID = "1" });
             return Json(users);
         }
 
+        [HttpPost("delete/{id}")]
+        public IActionResult DeleteByID(string id)
+        {
+            bool isDelete = userService.DeleteUser(new DTO.UserDTO() { ID = id });
+            if (isDelete)
+            {
+                return OK(null);
+            }
+            else
+            {
+                return Error("删除失败");
+            }
+        }
     }
 }

@@ -25,8 +25,7 @@ namespace Microservice.IdentityServer4.Repositories
         /// <summary>
         /// 实体表
         /// </summary>
-        protected readonly DbSet<TEntity> _dbSet; 
-             
+        protected readonly DbSet<TEntity> _dbSet;
 
         /// <summary>
         /// 构造函数
@@ -95,12 +94,15 @@ namespace Microservice.IdentityServer4.Repositories
                 {
                     throw new InvalidOperationException("无法逻辑删除该实体，请检查该实体是否具有逻辑删除属性");
                 }
-                return false;
+                _dbSet.Attach(entity).State = EntityState.Deleted;
+
+                return _db.SaveChanges() > 0;
             }
             else
             {
                 _logger.LogInformation($"{this.GetType().Name} 删除信息");
-                _db.Set<TEntity>().Remove(entity);
+                _dbSet.Attach(entity).State = EntityState.Deleted;
+
                 return _db.SaveChanges() > 0;
             }
         }
@@ -146,6 +148,7 @@ namespace Microservice.IdentityServer4.Repositories
                 return new List<TEntity>();
             }
         }
+
         /// <summary>
         /// 条件查询
         /// </summary>
@@ -189,10 +192,9 @@ namespace Microservice.IdentityServer4.Repositories
                 queryResult = queryResult.OrderByDescending(sortExpression);
             }
 
-            var pageResult = queryResult.Skip((pageIndex - 1 )* pageSize).Take(pageSize);
+            var pageResult = queryResult.Skip((pageIndex - 1) * pageSize).Take(pageSize);
 
             return pageResult;
         }
-
     }
 }

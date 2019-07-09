@@ -24,15 +24,22 @@ namespace Microservice.IdentityServer4.Services
         /// <returns>用户信息对象</returns>
         public async Task<UserDTO> CheckAsync(string account, string password)
         {
-            var user = await Repository.CheckAsync(account,password);
+            var user = await Repository.CheckAsync(account, password);
             return await Task.Run(() =>
              {
-                 return new UserDTO()
+                 if (user != null)
                  {
-                     ID = user.ID,
-                     Name = user.Name,
-                     Password = user.Password
-                 };
+                     return new UserDTO()
+                     {
+                         ID = user.ID,
+                         Name = user.Name,
+                         Password = user.Password
+                     };
+                 }
+                 else
+                 {
+                     return null;
+                 }
              });
         }
 
@@ -55,7 +62,7 @@ namespace Microservice.IdentityServer4.Services
                 Name = user.Name,
                 Password = user.Password
             };
-            return Repository.Delete(entity);
+            return Repository.Delete(entity, false);
         }
 
         public IEnumerable<UserDTO> QueryAllUser()

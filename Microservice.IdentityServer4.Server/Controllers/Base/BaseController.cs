@@ -1,9 +1,5 @@
 ﻿using Microservice.IdentityServer4.Server.Model.Response;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microservice.IdentityServer4.Server.Controllers
 {
@@ -13,21 +9,23 @@ namespace Microservice.IdentityServer4.Server.Controllers
         {
             return new JsonResult(obj);
         }
+
         protected JsonResult OK(object obj)
         {
-           var response =  new ResponseModel<object>(1,obj,null);
-           return new JsonResult(response);
+            var response = new ResponseModel<object>(1, obj, null);
+            return new JsonResult(response);
         }
-        protected JsonResult OK<TData>(TData data) where TData:class
+
+        protected JsonResult OK<TData>(TData data) where TData : class
         {
             var response = new ResponseModel<TData>(1, data, null);
             return new JsonResult(response);
         }
-        protected JsonResult Error(string message,object data = null)
+
+        protected JsonResult Error(string message, object data = null)
         {
             var response = new ResponseModel<object>(0, data, message);
             return new JsonResult(response);
         }
-
     }
 }

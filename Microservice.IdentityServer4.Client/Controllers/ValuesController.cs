@@ -9,6 +9,7 @@ using WebApiClient;
 
 namespace Microservice.IdentityServer4.Client.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ZJJWController
@@ -18,7 +19,6 @@ namespace Microservice.IdentityServer4.Client.Controllers
         //[Authorize]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            var httpContext = HttpContext;
             return new string[] { "value1", "value2" };
         }
 
@@ -26,6 +26,8 @@ namespace Microservice.IdentityServer4.Client.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
+            var context = HttpContext;
+            var user = User;
             return "value";
         }
 

@@ -1,6 +1,50 @@
 {
-  //"包含服务器的路由配置": null,
+  //"包含服务器的路由配置"
   "ReRoutes": [
+    //Swagger
+    // 测试客户端Swagger
+    {
+      "DownstreamPathTemplate": "/TestClient/swagger.json",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/TestClient/swagger.json",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 50433
+        }
+      ]
+    },
+    // 认证中心Swagger
+    {
+      "DownstreamPathTemplate": "/Center/swagger.json",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/Center/swagger.json",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        },
+        {
+          "Host": "localhost",
+          "Port": 50433
+        }
+      ],
+      "Priority": "0",
+      "UpstreamPathTemplate": "/api/{url}",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+    },
     {
       // 下游请求模板
       "DownstreamPathTemplate": "/api/{controller}/{action}",
@@ -17,7 +61,7 @@
         "Get",
         "Post"
       ],
-      "Priority": "0",
+      "Priority": "4",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "api1",
         "AllowedScopes": []
@@ -39,7 +83,7 @@
         "Get",
         "Post"
       ],
-      "Priority": "1",
+      "Priority": "5",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "api1",
         "AllowedScopes": []

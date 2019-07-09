@@ -3,9 +3,7 @@ using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microservice.IdentityServer4.IServices;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -29,7 +27,8 @@ namespace Microservice.IdentityServer4.Server
                 subject: context.UserName,
                 authenticationMethod: "custom",
                 claims: GetUserClaims());
-            } else if (user != null)
+            }
+            else if (user != null)
             {
                 context.Result = new GrantValidationResult(
                 subject: context.UserName,
